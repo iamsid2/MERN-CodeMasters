@@ -1,0 +1,19 @@
+import React, { Component } from "react";
+import "./App.css";
+import Navbar from "./components/layout/Navbar.js";
+import Landing from "./components/layout/Landing.js";
+import Footer from "./components/layout/footer.js";
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Navbar />
+        <Landing />
+        <Footer />
+      </div>
+    );
+  }
+}
+
+export default App;
