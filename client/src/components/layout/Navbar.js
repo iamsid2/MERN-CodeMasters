@@ -13,19 +13,22 @@ class Navbar extends Component {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <a
-            href=" "
-            onClick={this.onLogoutClick.bind(this)}
-            className="nav-link"
-          >
-            <img
+        <li className="nav-item nav-link">
+        <img
               src={user.avatar}
               alt={user.name}
               style={{ width: "25px", marginRight: "5px" }}
               title="You mush have your gravatar linked to your gmail"
               className="rounded-circle"
             />
+          {user.name}
+        </li>
+        <li className="nav-item">
+          <a
+            href=" "
+            onClick={this.onLogoutClick.bind(this)}
+            className="nav-link"
+          >
             Logout
           </a>
         </li>
