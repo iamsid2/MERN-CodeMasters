@@ -4,16 +4,17 @@ const isEmpty = require('./is-empty');
 module.exports = function validateProfileInput(data) {
   let errors = {};
 
-  data.handle = !isEmpty(data.handle) ? data.handle : '';
+  data.username = !isEmpty(data.username) ? data.username : '';
   data.status = !isEmpty(data.status) ? data.status : '';
   data.skills = !isEmpty(data.skills) ? data.skills : '';
+  data.address = !isEmpty(data.address) ? data.address : '';
 
-  if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
-    errors.handle = 'Handle needs to between 2 and 4 characters';
+  if (!Validator.isLength(data.username, { min: 2, max: 40 })) {
+    errors.username = 'Username needs to between 2 and 4 characters';
   }
 
-  if (Validator.isEmpty(data.handle)) {
-    errors.handle = 'Profile handle is required';
+  if (Validator.isEmpty(data.username)) {
+    errors.username = 'Profile Username is required';
   }
 
   if (Validator.isEmpty(data.status)) {
@@ -24,15 +25,13 @@ module.exports = function validateProfileInput(data) {
     errors.skills = 'Skills field is required';
   }
 
-  if (!isEmpty(data.website)) {
-    if (!Validator.isURL(data.website)) {
-      errors.website = 'Not a valid URL';
+  if (Validator.isEmpty(data.address)) {
+   errors.address = 'Address field is required';
     }
-  }
 
-  if (!isEmpty(data.youtube)) {
-    if (!Validator.isURL(data.youtube)) {
-      errors.youtube = 'Not a valid URL';
+  if (!isEmpty(data.githubid)) {
+    if (!Validator.isURL(data.githubid)) {
+      errors.githubid = 'Not a valid URL';
     }
   }
 

@@ -57,14 +57,14 @@ router.get("/all", (req, res) => {
     .catch(err => res.status(404).json({ profile: "There are no profiles" }));
 });
 
-// @route   GET api/profile/handle/:handle
-// @desc    Get profile by handle
+// @route   GET api/profile/username/:username
+// @desc    Get profile by username
 // @access  Public
 
-router.get("/handle/:handle", (req, res) => {
+router.get("/username/:username", (req, res) => {
   const errors = {};
 
-  Profile.findOne({ handle: req.params.handle })
+  Profile.findOne({ username: req.params.username })
     .populate("user", ["name", "avatar"])
     .then(profile => {
       if (!profile) {
@@ -107,7 +107,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { errors, isValid } = validateProfileInput(req.body);
-
+    // console.log(req.body);
     // Check Validation
     if (!isValid) {
       // Return any errors with 400 status
@@ -117,14 +117,14 @@ router.post(
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
-    if (req.body.handle) profileFields.handle = req.body.handle;
-    if (req.body.company) profileFields.company = req.body.company;
-    if (req.body.website) profileFields.website = req.body.website;
-    if (req.body.location) profileFields.location = req.body.location;
+    if (req.body.username) profileFields.username = req.body.username;
+    if (req.body.internship) profileFields.internship = req.body.internship;
+    // if (req.body.website) profileFields.website = req.body.website;
+    if (req.body.address) profileFields.address = req.body.address;
     if (req.body.bio) profileFields.bio = req.body.bio;
     if (req.body.status) profileFields.status = req.body.status;
-    if (req.body.githubusername)
-      profileFields.githubusername = req.body.githubusername;
+    if (req.body.githubid)
+      profileFields.githubid = req.body.githubid;
     // Skills - Spilt into array
     if (typeof req.body.skills !== "undefined") {
       profileFields.skills = req.body.skills.split(",");
@@ -132,12 +132,12 @@ router.post(
 
     // Social
     profileFields.social = {};
-    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
+    // if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
     if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
     if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
     if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
     if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
-
+    console.log(profileFields);
     Profile.findOne({ user: req.user.id }).then(profile => {
       if (profile) {
         // Update
@@ -149,10 +149,10 @@ router.post(
       } else {
         // Create
 
-        // Check if handle exists
-        Profile.findOne({ handle: profileFields.handle }).then(profile => {
+        // Check if username exists
+        Profile.findOne({ username: profileFields.username}).then(profile => {
           if (profile) {
-            errors.handle = "That handle already exists";
+            errors.username = "Username already exists";
             res.status(400).json(errors);
           }
 

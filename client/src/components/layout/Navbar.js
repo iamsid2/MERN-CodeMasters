@@ -3,17 +3,20 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authAction";
+import { clearCurrentProfile } from "../../actions/profileAction";
 
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
+    this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item nav-link">
+        <li className="nav-item">
+          <Link className="nav-link" to="/dashboard">
         <img
               src={user.avatar}
               alt={user.name}
@@ -22,8 +25,9 @@ class Navbar extends Component {
               className="rounded-circle"
             />
           {user.name}
+          </Link>
         </li>
-        <li className="nav-item">
+         <li className="nav-item">
           <a
             href=" "
             onClick={this.onLogoutClick.bind(this)}
@@ -52,7 +56,7 @@ class Navbar extends Component {
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            Mern-DevConnector
+            CodeMasters
           </Link>
           <button
             className="navbar-toggler"
@@ -91,5 +95,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser,clearCurrentProfile }
 )(Navbar);
