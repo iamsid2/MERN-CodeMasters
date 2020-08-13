@@ -5,6 +5,8 @@ import Loading from '../common/Loading';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AddProfileDetails } from './AddProfileDetails'
+import Education  from './Education'
+import Experience from './Experience'
 
 class Dashboard extends Component {
     componentDidMount() {
@@ -36,6 +38,8 @@ class Dashboard extends Component {
                     {user.name}</Link></p>
                 <br/>
                 <AddProfileDetails/>
+                <Experience experience={profile.experience} />
+                <Education education={profile.education} />
                 <div style={{marginBottom: '60px'}}>
                     <button onClick={this.onDelete.bind(this)} className="btn btn-danger">Delete My Account</button>
                 </div>
