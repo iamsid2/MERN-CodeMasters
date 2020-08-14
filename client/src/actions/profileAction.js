@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_PROFILE,PROFILE_LOADING, GET_ERRORS, CLEAR_CURRENT_PROFILE, SET_CURRENT_USER} from "./types";
+import {GET_PROFILE,PROFILE_LOADING, GET_ERRORS, CLEAR_CURRENT_PROFILE, SET_CURRENT_USER, GET_ALL_PROFILES} from "./types";
 
 export const getCurrentProfile = () => dispatch => {
     dispatch(setProfileLoading());
@@ -44,10 +44,13 @@ export const addExperience = (expData, history) => dispatch => {
 };
 
 //Delete Experience
-export const deleteExperience = (id,history) => dispatch => {
+export const deleteExperience = (id) => dispatch => {
     axios
         .delete(`/api/profile/experience/${id}`)
-        .then(res => history.push('/dashboard'))
+        .then(res => dispatch({
+            type:GET_PROFILE,
+            payload:res.data
+        }))
         .catch(err => {
             dispatch({
                 type:GET_ERRORS,
@@ -70,14 +73,51 @@ export const addEducation= (eduData, history) => dispatch => {
 };
 
 //Delete Education
-export const deleteEducation = (id,history) => dispatch => {
+export const deleteEducation = (id) => dispatch => {
     axios
         .delete(`/api/profile/education/${id}`)
-        .then(res => history.push('/dashboard'))
+        .then(res => dispatch({
+            type:GET_PROFILE,
+            payload:res.data
+        }))
         .catch(err => {
             dispatch({
                 type:GET_ERRORS,
                 payload:err.response.data
+            })
+        });
+};
+
+//Get Profiles
+export const getProfiles = (id) => dispatch => {
+    dispatch(setProfileLoading());
+    axios
+        .get('/api/profile/all')
+        .then(res => dispatch({
+            type:GET_ALL_PROFILES,
+            payload:res.data
+        }))
+        .catch(err => {
+            dispatch({
+                type:GET_ERRORS,
+                payload:err.response.data
+            })
+        });
+};
+
+//Get Profile By Username
+export const getProfileByUsername = (username) => dispatch => {
+    dispatch(setProfileLoading());
+    axios
+        .get(`/api/profile/username/${username}`)
+        .then(res => dispatch({
+            type:GET_PROFILE,
+            payload:res.data
+        }))
+        .catch(err => {
+            dispatch({
+                type:GET_PROFILE,
+                payload:null
             })
         });
 };

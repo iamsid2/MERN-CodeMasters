@@ -29,11 +29,11 @@ module.exports = function validateProfileInput(data) {
    errors.address = 'Address field is required';
     }
 
-  if (!isEmpty(data.githubid)) {
-    if (!Validator.isURL(data.githubid)) {
-      errors.githubid = 'Not a valid URL';
-    }
-  }
+  // if (!isEmpty(data.githubid)) {
+  //   if (!Validator.isURL(data.githubid)) {
+  //     errors.githubid = 'Not a valid URL';
+  //   }
+  // }
 
   if (!isEmpty(data.twitter)) {
     if (!Validator.isURL(data.twitter)) {
