@@ -22,6 +22,15 @@ app.use('/api/posts', posts)
 app.use('/api/profile', profile)
 app.use('/api/users', users)
 
+if (process.env.NODE_ENV === 'production') {
+        // Set static folder
+        app.use(express.static('client/build'));
+      
+        app.get('*', (req, res) => {
+          res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+        });
+      }
+
 mongoose.connect(db,{ useNewUrlParser: true })
         .then(() => console.log("Connected to the Database..."))
         .catch(err => console.log(err));
