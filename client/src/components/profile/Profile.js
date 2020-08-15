@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
 import ProfileCreds from './ProfileCreds';
-import ProfileGithub from './ProfileGithub';
 import Loading from '../common/Loading';
 import { getProfileByUsername } from '../../actions/profileAction';
 
@@ -45,9 +44,6 @@ class Profile extends Component {
             education={profile.education}
             experience={profile.experience}
           />
-          {profile.githubusername ? (
-            <ProfileGithub username={profile.githubid} />
-          ) : null}
         </div>
       );
     }
