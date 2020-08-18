@@ -15,6 +15,10 @@ export function AddProfileDetails() {
         <i className="fas fa-graduation-cap text-info mr-1" />
         Add Education
       </Link>
+      <Link to="/add-project" className="btn btn-light">
+        <i className="fas fa-graduation-cap text-info mr-1" />
+        Add Project
+      </Link>
     </div>
     )
 }

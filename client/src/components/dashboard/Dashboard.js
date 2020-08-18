@@ -18,8 +18,9 @@ class Dashboard extends Component {
     }
 
     render() {
-        const {user} = this.props.auth;
-        const {profile,loading} = this.props.profile;
+        const { user } = this.props.auth;
+        const { profile,loading } = this.props.profile;
+        const { project } = this.props.project;
         let dashboardContent;
         if(profile==null || loading) {
             dashboardContent = <Loading />;
@@ -40,6 +41,7 @@ class Dashboard extends Component {
                 <AddProfileDetails/>
                 <Experience experience={profile.experience} />
                 <Education education={profile.education} />
+                {/* <Project project={project} /> */}
                 <div style={{marginBottom: '60px'}}>
                     <button onClick={this.onDelete.bind(this)} className="btn btn-danger">Delete My Account</button>
                 </div>
@@ -67,14 +69,16 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
-    profile: state.profile
+    profile: state.profile,
+    project: state.project
 })
 
 Dashboard.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
     deleteAccount: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
-    profile: PropTypes.object.isRequired
+    profile: PropTypes.object.isRequired,
+    project: PropTypes.object.isRequired
 
 }
 

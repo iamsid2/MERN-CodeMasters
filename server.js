@@ -7,9 +7,9 @@ const app = express();
 
 const db = require('./config/keys').mongoURI;
 
-const posts = require('./routes/api/posts');
 const profile = require('./routes/api/profile');
 const users = require('./routes/api/users');
+const project = require('./routes/api/project');
 
 //Passport Middlewares
 app.use(passport.initialize());
@@ -19,9 +19,9 @@ app.use(passport.initialize());
 //Middlewares
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
-app.use('/api/posts', posts)
 app.use('/api/profile', profile)
 app.use('/api/users', users)
+app.use('/api/project', project)
 
 if (process.env.NODE_ENV === 'production') {
         // Set static folder

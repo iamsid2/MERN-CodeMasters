@@ -12,12 +12,6 @@ const ProfileSchema = new Schema({
     required: true,
     max: 40
   },
-  internship: {
-    type: String
-  },
-  // website: {
-  //   type: String
-  // },
   address: {
     type: String
   },
