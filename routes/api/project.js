@@ -7,10 +7,6 @@ const validateProjectInput = require('../../validation/project');
 
 const Project = require('../../models/Project');
 
-router.get('/', (req,res,next) => {
-    res.send("Project Page");
-})
-
 router.post('/', passport.authenticate("jwt", { session: false }) ,(req,res,next) => {
     const {errors,isValid} = validateProjectInput(req.body);
     console.log(req.body);
@@ -37,5 +33,41 @@ router.post('/', passport.authenticate("jwt", { session: false }) ,(req,res,next
                 next(err);
             })
 });
+
+router.get('/', passport.authenticate("jwt", { session: false }), (req,res,next) => {
+    // console.log("Accesssed")
+    Project
+        .find({user: req.user.id})
+        .then(projects => {
+            // console.log(projects);
+            res.json(projects);
+        })
+        .catch(err => {
+            next(err);
+        });
+});
+
+router.get("/all", (req, res) => {
+    const errors = {};
+    // console.log("In All Project")
+    Project.find()
+      .populate("user", ["name", "avatar"])
+      .then(projects => {
+        if (!projects) {
+          errors.noproject = "There are no projects";
+          return res.status(404).json(errors);
+        }
+  
+        res.json(projects);
+      })
+      .catch(err => res.status(404).json({ project: "There are no projects" }));
+  });
+
+router.delete('/:id', passport.authenticate("jwt", {session: false}), (req,res,next) => {
+    Project.findOneAndRemove({_id: req.params.id}).then(() => {
+        Project.find({user: req.user.id})
+           .then((project)=> res.json(project))
+        })
+})
 
 module.exports = router;

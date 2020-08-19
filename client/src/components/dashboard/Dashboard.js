@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { getCurrentProfile, deleteAccount } from '../../actions/profileAction';
+import { getCurrentProject } from '../../actions/projectAction';
 import Loading from '../common/Loading';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AddProfileDetails } from './AddProfileDetails'
 import Education  from './Education'
 import Experience from './Experience'
+import Project from './Project'
 
 class Dashboard extends Component {
     componentDidMount() {
         this.props.getCurrentProfile();
+        this.props.getCurrentProject();
     }
 
     onDelete(e) {
@@ -22,10 +25,16 @@ class Dashboard extends Component {
         const { profile,loading } = this.props.profile;
         const { project } = this.props.project;
         let dashboardContent;
-        if(profile==null || loading) {
+        let projectContent= "";
+        if(profile==null || loading || project==null) {
             dashboardContent = <Loading />;
         } else {
             // dashboardContent = "Hello " + user.name
+            if(Object.keys(project).length>0) {
+                projectContent = (
+                    <Project project={project} />
+                )
+            }
             if(Object.keys(profile).length>0) {
             dashboardContent = (
                 <div>
@@ -41,7 +50,7 @@ class Dashboard extends Component {
                 <AddProfileDetails/>
                 <Experience experience={profile.experience} />
                 <Education education={profile.education} />
-                {/* <Project project={project} /> */}
+                {projectContent}
                 <div style={{marginBottom: '60px'}}>
                     <button onClick={this.onDelete.bind(this)} className="btn btn-danger">Delete My Account</button>
                 </div>
@@ -61,7 +70,7 @@ class Dashboard extends Component {
         }
         return (
             <div>
-             {dashboardContent}
+             { dashboardContent }
             </div>
         )
     }
@@ -75,6 +84,7 @@ const mapStateToProps = (state) => ({
 
 Dashboard.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
+    getCurrentProject: PropTypes.func.isRequired,
     deleteAccount: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
@@ -82,4 +92,4 @@ Dashboard.propTypes = {
 
 }
 
-export default connect(mapStateToProps,{ getCurrentProfile, deleteAccount })(Dashboard);
+export default connect(mapStateToProps,{ getCurrentProfile, deleteAccount, getCurrentProject })(Dashboard);

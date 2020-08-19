@@ -75,6 +75,12 @@ class Navbar extends Component {
                   Developers
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/projects">
+                  {" "}
+                  Projects
+                </Link>
+              </li>
             </ul>
           </div>
           {isAuthenticated ? authLinks : guestLinks}

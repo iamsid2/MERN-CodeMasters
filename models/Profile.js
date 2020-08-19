@@ -15,6 +15,9 @@ const ProfileSchema = new Schema({
   address: {
     type: String
   },
+  internship: {
+    type: String
+  },
   status: {
     type: String,
     required: true

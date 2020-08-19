@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
         });
       }
 
-mongoose.connect(db,{ useNewUrlParser: true })
+mongoose.connect(db,{ useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true })
         .then(() => console.log("Connected to the Database..."))
         .catch(err => console.log(err));
 
